@@ -289,33 +289,33 @@ export function add_menu(form) { //第二种
   this.loading = false //加载界面
   this.$router.addRoutes(this.$store.getters.addRouters) // 动态添加可访问路由表
   this.$router.push({ path: '/dashboard' })// 跳转到首页
-}).catch(() => {
-  this.loading = false
-})
+  }).catch(() => {
+    this.loading = false
+  })
   ```
   下一步 我们要对路由设置钩子函数,在用户输入url之前确定用户是否登录具体代码在（src/permission.js）
- ```
- const whiteList = ['/login'] // 不重定向白名单
- router.beforeEach((to, from, next) => {
-   NProgress.start()
-   if (getToken()) {
-     // console.log(getToken())
-     if (to.path === '/login') {
-       next({ path: '/' })
-     } else {
-       next()
-     }
-   } else {
-     if (whiteList.indexOf(to.path) !== -1) {
-       next()
-     } else {
-       next('/login')
-       NProgress.done()
-     }
+  ```
+  const whiteList = ['/login'] // 不重定向白名单
+  router.beforeEach((to, from, next) => {
+    NProgress.start()
+    if (getToken()) {
+      // console.log(getToken())
+      if (to.path === '/login') {
+        next({ path: '/' })
+      } else {
+        next()
+      }
+    } else {
+      if (whiteList.indexOf(to.path) !== -1) {
+        next()
+      } else {
+        next('/login')
+        NProgress.done()
+      }
    }
- })
+  })
 
- router.afterEach(() => {
-   NProgress.done() // 结束Progress
- })
- ```
+  router.afterEach(() => {
+    NProgress.done() // 结束Progress
+  })
+  ```
