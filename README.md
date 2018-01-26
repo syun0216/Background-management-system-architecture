@@ -166,6 +166,7 @@ export function add_menu(form) { //第二种
   })
 }
 ```
+而我们最好使用第二种，因为它简洁而且第一种会在ie上有bug <br>
 下一步我们只需要在文件中引入 <br>
 `import { add_menu } from '@/api/navigation'`
 
@@ -253,3 +254,68 @@ export function add_menu(form) { //第二种
     },
   }
   ```
+  getters：
+  ```
+  const getters = {
+    token: state => state.user.token,
+    avatar: state => state.user.avatar,
+    username: state => state.user.name,
+    roles: state => state.user.roles,
+  }
+  export default getters
+  ```
+  index.js
+  ```
+  import Vue from 'vue'
+  import Vuex from 'vuex'
+  import user from './modules/user'
+  import getters from './getters'
+
+  Vue.use(Vuex)
+
+  const store = new Vuex.Store({
+    modules: {
+      user
+    },
+    getters
+  })
+
+  export default store
+  ```
+  基础配置完成后，我们在登录界面对登录进行操作，具体代码位置（src/views/login/index.vue）
+  核心代码:
+  ```
+  this.$store.dispatch('NewLogin', this.loginForm).then(() => {// 登录请求
+  this.loading = false //加载界面
+  this.$router.addRoutes(this.$store.getters.addRouters) // 动态添加可访问路由表
+  this.$router.push({ path: '/dashboard' })// 跳转到首页
+}).catch(() => {
+  this.loading = false
+})
+  ```
+  下一步 我们要对路由设置钩子函数,在用户输入url之前确定用户是否登录具体代码在（src/permission.js）
+ ```
+ const whiteList = ['/login'] // 不重定向白名单
+ router.beforeEach((to, from, next) => {
+   NProgress.start()
+   if (getToken()) {
+     // console.log(getToken())
+     if (to.path === '/login') {
+       next({ path: '/' })
+     } else {
+       next()
+     }
+   } else {
+     if (whiteList.indexOf(to.path) !== -1) {
+       next()
+     } else {
+       next('/login')
+       NProgress.done()
+     }
+   }
+ })
+
+ router.afterEach(() => {
+   NProgress.done() // 结束Progress
+ })
+ ```
