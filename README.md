@@ -61,7 +61,7 @@ module.exports = global_params
 <p align="center;" style="color:#ff5858;">
  注意：为了避免打包的时候es6的编译出错，而导致ie11及以下浏览器(*包括QQ浏览器在内*)的直接空白页，此处bug出现在vue的项目按需引入iview-ui，我们使用var global_params而不是const global_params
 </p>
-<!-- 2、多环境<br>
+2、多环境<br>
 vue-cli 默认只提供了dev和prod两种环境。但其实正真的开发流程可能还会多一个sit或者stage环境，就是所谓的测试环境和预发布环境。所以我们就要简单的修改一下代码。其实很简单就是设置不同的环境变量<br>
 ```
 "build:prod": "NODE_ENV=production node build/build.js",
@@ -80,7 +80,7 @@ var env = process.env.NODE_ENV === 'production' ? config.build.prodEnv : config.
 
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 webpackConfig.plugins.push(new BundleAnalyzerPlugin())
-``` -->
+```
 在我们的src项目下新建一个utils文件夹放我们的公共方法，新建一个文件叫fetch.js或者叫request.js之类的，*(该文件用于封装我们的网络请求方法)*
 详见(vue-admin/src/utils/fetch.js),<br>首先我们引入相关的依赖，代码如下:
 ```
@@ -185,6 +185,21 @@ export function add_menu(form) { //第二种
   })
 }
 ```
+下一步我们只需要在文件中引入 <br>
+`import { add_menu } from '@/api/navigation'`
 
 ### 权限管理
 *权限管理部分包括登录权限，菜单权限，请求权限等*
+- 登录权限管理<br>
+  顾名思义就是路由分登录之前和登录之后可见两部分，所以这里我们将路由大概归位三类<br>
+  1、登录界面<br>
+  2、404界面（也就是当用户输入不存在的路由url时，同意跳到404界面）<br>
+  3、dashboard界面（也就是我们的桌面，）这个路由下包含着菜单的子路由<br>
+  <span style="color:#ff5858">实现逻辑：</span>
+  > 1、首先我们登录之前输入任何地址都将url重定向到login <br>
+  > 2、登录时我们将登录返回的用户名或者id存到状态机store里还有cookie也保留一份，然后跳转到桌面 <br>
+  > 3、登录后输入/login的登录url将被重定向到桌面的默认路由url <br>
+  > 4、登录后输入任意不匹配的url将被重定向到404页面 <br>
+  > 5、点击退出登录按钮，清除store和cookie里的用户信息，并跳转到登录界面
+
+  
