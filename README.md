@@ -182,3 +182,74 @@ export function add_menu(form) { //第二种
   > 3、登录后输入/login的登录url将被重定向到桌面的默认路由url <br>
   > 4、登录后输入任意不匹配的url将被重定向到404页面 <br>
   > 5、点击退出登录按钮，清除store和cookie里的用户信息，并跳转到登录界面
+
+  路由代码核心如下：
+  ```
+  export const constantRouterMap = [
+  { path: '/login', component: _import('login/index'), hidden: true },
+  { path: '/404', component: _import('404'), hidden: true },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/myfocus/page',
+    hidden: true,
+    children: [{ path: 'dashboard', name: '仪表盘', component: _import('dashboard/index') }]
+  } ...]
+  export default new Router({
+    // mode: 'history', //后端支持可开
+    // mode: 'history',
+    scrollBehavior: () => ({ x: 0, y: 0 }),
+    routes: constantRouterMap
+  })
+  ```
+  Layout下的children就是我们的子路由,详细请参阅(*vue-admin/src/routes/index.js*)<br>
+  除了路由,我们另外一个重点就是store了，我们引进方便存cookie的插件js-cookie以及md5密码,命令如下:
+  `npm i js-cookie -S`
+  `npm i js-md5 -S` <br>
+  或者 `yarn add js-cookie`
+  `yarn add js-md5`
+  以登录为例，我简要谈一下store：
+  > 我们首先在src目录下创建一个store文件夹,再创建一个getters.js（用于快速得到我们的state）,index.js（用于整合我们的module和getters）再创建一个module文件夹，在module文件夹里面创建要一个user.js
+-
+  具体核心代码：
+  user.js
+
+  ```
+  state: {
+    token: getToken(),
+    name: null,
+    avatar: '',
+    roles: []
+  },
+  mutations: {
+    SET_TOKEN: (state, token) => {
+      state.token = token
+    },
+    SET_NAME: (state, data) => {
+      state.name = Object.assign(data)
+    },
+    SET_AVATAR: (state, avatar) => {
+      state.avatar = avatar
+    },
+    SET_ROLES: (state, roles) => {
+      state.roles = roles
+    }
+  },
+  actions: {
+    // new login
+    NewLogin({ commit }, userInfo) {
+      const username = userInfo.username.trim()
+      return new Promise((resolve, reject) => {
+        user_login(username, userInfo.password).then(response => {
+          const data = response.data
+          console.log(data)
+          setToken(data[0])
+          commit('SET_TOKEN', data[0])
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+  }
+  ```
