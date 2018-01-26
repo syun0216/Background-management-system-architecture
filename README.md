@@ -61,7 +61,7 @@ module.exports = global_params
 <p align="center;" style="color:#ff5858;">
  注意：为了避免打包的时候es6的编译出错，而导致ie11及以下浏览器(*包括QQ浏览器在内*)的直接空白页，此处bug出现在vue的项目按需引入iview-ui，我们使用var global_params而不是const global_params
 </p>
-2、多环境<br>
+<!-- 2、多环境<br>
 vue-cli 默认只提供了dev和prod两种环境。但其实正真的开发流程可能还会多一个sit或者stage环境，就是所谓的测试环境和预发布环境。所以我们就要简单的修改一下代码。其实很简单就是设置不同的环境变量<br>
 ```
 "build:prod": "NODE_ENV=production node build/build.js",
@@ -80,7 +80,7 @@ var env = process.env.NODE_ENV === 'production' ? config.build.prodEnv : config.
 
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 webpackConfig.plugins.push(new BundleAnalyzerPlugin())
-```
+``` -->
 在我们的src项目下新建一个utils文件夹放我们的公共方法，新建一个文件叫fetch.js或者叫request.js之类的，*(该文件用于封装我们的网络请求方法)*
 详见(vue-admin/src/utils/fetch.js),<br>首先我们引入相关的依赖，代码如下:
 ```
