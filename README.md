@@ -11,7 +11,7 @@
 
 ## 简介
 本项目集合vue+vuex+vue-router+element-ui、react+react-router-dom+redux+antd-design(分别用比较火的两个脚手架create-react-app和蚂蚁金服的react轻量级框架dva)
-着重想介绍后台管理系统中的**权限管理**，**网络请求**，**状态机**，**缓存**，**组件的写法**以及在构建一个后台系统中可能会遇到的杂七杂八的问题，希望读者能够少走弯路。<br />
+着重想介绍后台管理系统中的**权限管理**，**网络请求**、**状态机**、**缓存**、**组件的写法**、**打包上线**、**优化**以及在构建一个后台系统中可能会遇到的杂七杂八的问题，希望读者能够少走弯路。<br />
 (本文档将持续更新...)
 
 ## 注意
@@ -26,6 +26,30 @@
 `npm i element -S`<br>
 `npm i vuex -S`<br>
 至此我们完成项目的第一步
+
+### 本地服务器的搭建
+本地开发的我开的是php的服务，用nginx搭的服务器，nginx的详细配置请点击[此处](http://blog.csdn.net/hzsunshine/article/details/63687054)
+当然你也可以使用云端的服务器地址，**不过我的建议是开发的时候自己在本地搭一套服务也是极好的，这样可以方便我们修改接口，而不用等到线上更新**。我们还可以使用**mock**，<span style="color:#ff5858;font-size:18px;font-weight:bold">
+前提是我们在与后端一起定义好接口文档，实现前后分离快速开发</span>,
+mock的教程点击[此处](https://www.cnblogs.com/zhenfei-jiang/p/7235339.html)<br>
+这些工作都做完之后我们可能会遇到跨域的问题：<span style="color:#ff5858;font-size:18px;font-weight:bold">此时不要慌，打开根目录下的config文件夹，打开index,js，在dev选项里添加proxyTable</span>,代码参考：<br>
+```
+port: 9528,
+proxyTable: {
+  '/api': {
+    target: 'http://localhost:1091',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api': '/api'
+    }
+  }
+},
+```
+此处的意思是将本地服务器9528的/api请求转发到1091的/api处,1091为我们本地nginx的服务
+
+### 封装网络请求
+在我们的src项目下新建一个utils文件夹放我们的公共方法
+
 
 
 ### 权限管理
