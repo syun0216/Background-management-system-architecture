@@ -22,9 +22,10 @@
 ## vue部分
 ### 项目搭建和必装的插件
 不得不说vue的构建工具真tm舒服，简直可以简化很多工作了。使用[vue-cli](https://github.com/vuejs/vue-cli)的命令
-`vue init webpack my-project`生成我们第一个vue项目（点击**vue-cli**查看安装教程）,这里我们还需要[element-ui](http://element-cn.eleme.io/#/zh-CN/component/installation)和vuex,分别使用一下命令：<br>
-`npm i element -S`<br>
+`vue init webpack my-project`生成我们第一个vue项目（点击**vue-cli**查看安装教程）,这里我们还需要[element-ui](http://element-cn.eleme.io/#/zh-CN/component/installation)、[vuex](https://vuex.vuejs.org/zh-cn/intro.html)和[axios](https://www.jianshu.com/p/df464b26ae58),分别使用一下命令：<br>
+`npm i element-ui -S`<br>
 `npm i vuex -S`<br>
+`npm i axios -S`<br>
 至此我们完成项目的第一步
 
 ### 本地服务器的搭建
@@ -48,7 +49,39 @@ proxyTable: {
 此处的意思是将本地服务器9528的/api请求转发到1091的/api处,1091为我们本地nginx的服务
 
 ### 封装网络请求
-在我们的src项目下新建一个utils文件夹放我们的公共方法
+1、在我们根目录的config文件下创建一个global_parmas.js文件(*用于储存全局参数*)，因为我的项目是后台和前端都在一个文件夹里所以代码如下：
+```
+var global_params = {
+  dev_url: 'http://localhost:9528',
+  pro_url: 'http://' + window.location.host
+}
+
+module.exports = global_params
+```
+<p align="center;" style="color:#ff5858;">
+ 注意：为了避免打包的时候es6的编译出错，而导致ie11及以下浏览器(*包括QQ浏览器在内*)的直接空白页，此处bug出现在vue的项目按需引入iview-ui，我们使用var global_params而不是const global_params
+</p>
+2、多环境<br>
+vue-cli 默认只提供了dev和prod两种环境。但其实正真的开发流程可能还会多一个sit或者stage环境，就是所谓的测试环境和预发布环境。所以我们就要简单的修改一下代码。其实很简单就是设置不同的环境变量<br>
+```
+"build:prod": "NODE_ENV=production node build/build.js",
+"build:sit": "NODE_ENV=sit node build/build.js",
+```
+之后在代码里自行判断，想干就干啥
+```
+var env = process.env.NODE_ENV === 'production' ? config.build.prodEnv : config.build.sitEnv
+```
+新版的 vue-cli 也内置了 webpack-bundle-analyzer 一个模块分析的东西，相当的好用。使用方法也很简单，和之前一样封装一个 npm script 就可以。
+```
+//package.json
+ "build:sit-preview": "cross-env NODE_ENV=production env_config=sit npm_config_preview=true  npm_config_report=true node build/build.js"
+
+//之后通过process.env.npm_config_report来判断是否来启用webpack-bundle-analyzer
+
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+```
+在我们的src项目下新建一个utils文件夹放我们的公共方法，新建一个文件叫fetch.js或者叫request.js之类的，*(该文件用于封装我们的网络请求方法)*
 
 
 
