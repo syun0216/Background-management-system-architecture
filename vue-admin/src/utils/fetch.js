@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Message, MessageBox } from 'element-ui'
 import { getToken } from '@/utils/auth';
-import Global from '../../config/global_params'
+import global_params from '../../config/global_params'
 // 创建axios实例
 const service = axios.create({
     // baseURL: process.env.BASE_API, // api的base_url

@@ -1,5 +1,5 @@
 var global_params = {
-  dev_url: 'http://localhost:1091',
+  dev_url: 'http://localhost:9528',
   pro_url: 'http://' + window.location.host
 }
 
