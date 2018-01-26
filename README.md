@@ -61,26 +61,7 @@ module.exports = global_params
 <p align="center;" style="color:#ff5858;">
  注意：为了避免打包的时候es6的编译出错，而导致ie11及以下浏览器(*包括QQ浏览器在内*)的直接空白页，此处bug出现在vue的项目按需引入iview-ui，我们使用var global_params而不是const global_params
 </p>
-2、多环境<br>
-vue-cli 默认只提供了dev和prod两种环境。但其实正真的开发流程可能还会多一个sit或者stage环境，就是所谓的测试环境和预发布环境。所以我们就要简单的修改一下代码。其实很简单就是设置不同的环境变量<br>
-```
-"build:prod": "NODE_ENV=production node build/build.js",
-"build:sit": "NODE_ENV=sit node build/build.js",
-```
-之后在代码里自行判断，想干就干啥
-```
-var env = process.env.NODE_ENV === 'production' ? config.build.prodEnv : config.build.sitEnv
-```
-新版的 vue-cli 也内置了 webpack-bundle-analyzer 一个模块分析的东西，相当的好用。使用方法也很简单，和之前一样封装一个 npm script 就可以。
-```
-//package.json
- "build:sit-preview": "cross-env NODE_ENV=production env_config=sit npm_config_preview=true  npm_config_report=true node build/build.js"
 
-//之后通过process.env.npm_config_report来判断是否来启用webpack-bundle-analyzer
-
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-webpackConfig.plugins.push(new BundleAnalyzerPlugin())
-```
 在我们的src项目下新建一个utils文件夹放我们的公共方法，新建一个文件叫fetch.js或者叫request.js之类的，*(该文件用于封装我们的网络请求方法)*
 详见(vue-admin/src/utils/fetch.js),<br>首先我们引入相关的依赖，代码如下:
 ```
@@ -201,5 +182,3 @@ export function add_menu(form) { //第二种
   > 3、登录后输入/login的登录url将被重定向到桌面的默认路由url <br>
   > 4、登录后输入任意不匹配的url将被重定向到404页面 <br>
   > 5、点击退出登录按钮，清除store和cookie里的用户信息，并跳转到登录界面
-
-  
