@@ -1,0 +1,196 @@
+
+@mixin theme-bg($main_bg,$sub_bg,$font_color_select,$font_color) {
+  .el-tag--success {
+    background-color:$sub_bg;
+    border-color: $main_bg;
+    color: #fff;
+    }
+    .el-tag--success .el-tag__close {
+      color: #fff;
+      font-weight: 400;
+      &:hover{
+        background-color:#fff;
+        color:#909399;
+      }
+  }
+  .ivu-btn-primary{
+    color:#fff;
+    background-color:$sub_bg;
+    border-color:$sub_bg;
+    &:hover{
+      background-color:$sub_bg;
+      border-color:$sub_bg;
+      opacity: .7;
+    }
+  }
+  // .el-button--primary{
+  //   @extend .ivu-btn-primary
+  // }
+  .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active {
+    color: $sub_bg !important;
+    background-color: #fff !important;
+    border-right-color: #dcdfe6 !important;
+    border-left-color: #dcdfe6 !important;
+    }
+  .selected_item {
+    color: $font_color;
+    background: $sub_bg !important;
+  }
+  .manage_container .common-li:hover {
+    background: $sub_bg;
+    color: $font_color;
+  }
+  .el-submenu__title {
+    color: $font_color;
+    font-size: 18px;
+    &:hover {
+      background-color: $main_bg;
+      color: $font_color_select;
+    }
+  }
+  .el-menu {
+    background-color: $main_bg;
+  }
+
+  .el-submenu {
+    .el-menu {
+      background-color: $sub_bg;
+    }
+  }
+
+  .el-menu-item {
+    color: $font_color;
+    font-size: 18px;
+    &:hover {
+      background-color: $main_bg;
+      color: $font_color_select;
+    }
+    .is-active {
+      background: $main_bg;
+      color: $font_color_select;
+    }
+  }
+
+  .el-submenu .el-menu-item {
+    &:hover {
+      background-color: $sub_bg;
+      color: $font_color_select;
+    }
+    .is-active {
+      color: $font_color_select;
+      background: $sub_bg;
+    }
+  }
+  .el-menu-item.is-active {
+    color: $font_color_select;
+    background: $main_bg;
+  }
+  .el-submenu .el-menu-item.is-active {
+    color: $font_color_select;
+    background: $sub_bg;
+  }
+  .el-submenu__title i {
+    color: $font_color;
+  }
+  .el-cascader-menu__item.is-active {
+    background: $sub_bg;
+    color: $font_color;
+  }
+
+  #app_header {
+    background: $main_bg;
+    color: $font_color;
+    .avatar-container {
+      .avatar-wrapper {
+        .user-name {
+          color: $font_color;
+        }
+        .el-icon-arrow-down {
+          color: $font_color;
+        }
+      }
+    }
+  } //顶部横幅的样式
+}
+
+@mixin macro_content_theme($main_bg,$sub_bg,$font_color_select,$font_color){
+  .macro_index_container {
+    .el-header {
+      background-color: $sub_bg;
+      color: $font_color;
+    }
+    .ivu-tree-title-selected {
+      background-color: $sub_bg !important;
+      color: $font_color !important;
+    }
+    .ivu-btn-primary {
+      background-color: $sub_bg;
+      border-color: $sub_bg;
+    }
+    .table_selected{
+      background:$sub_bg !important;
+      border:1px solid $sub_bg;
+      color: #fff !important;
+    }
+  }
+}
+
+.custom-default{
+    @include theme-bg(#438eb9,#7ab1d1 ,#d3fff7 ,#fff);
+    @include macro_content_theme(#438eb9,#7ab1d1 ,#d3fff7 ,#fff)
+}
+// .custom-black{ // 旧
+//     @include theme-bg(#34374a,#697096 ,#afaef9 ,#fff)
+// }
+.custom-black{
+    @include theme-bg(#081029,#283660 ,#b2f9ff ,#fff);
+    @include macro_content_theme(#081029,#283660 ,#b2f9ff ,#fff)
+}
+.custom-black2{
+  @include theme-bg(#212121,#3d3838 ,#b3b2ff ,#fff);
+  @include macro_content_theme(#212121,#3d3838 ,#b3b2ff ,#fff)
+}
+.custom-blue{
+    @include theme-bg(#217bb8,#43a2e0 ,#cafffc ,#fff);
+    @include macro_content_theme(#217bb8,#43a2e0 ,#cafffc ,#fff)
+}
+.custom-dark{
+    @include theme-bg(#334681,#5b72b8 ,#cafffc ,#fff);
+    @include macro_content_theme(#334681,#5b72b8 ,#cafffc ,#fff)
+}
+.custom-red{
+  @include theme-bg(#b82148,#e84670 ,#ffc7f9 ,#fff);
+  @include macro_content_theme(#b82148,#e84670 ,#ffc7f9 ,#fff);
+}
+.custom-orange{
+  @include theme-bg(#dc3945,#e85862 ,#ffc7f9 ,#fff);
+  @include macro_content_theme(#dc3945,#e85862 ,#ffc7f9 ,#fff);
+}
+.custom-purple{
+  @include theme-bg(#673ab7,#7d52c8 ,#c7e9ff ,#fff);
+  @include macro_content_theme(#673ab7,#7d52c8 ,#c7e9ff ,#fff);
+}
+.custom-green{
+  @include theme-bg(#25b8a9,#52c5b9 ,#ccffcc ,#fff);
+  @include macro_content_theme(#25b8a9,#52c5b9 ,#ccffcc ,#fff);
+}
+
+.app-main{
+  .sidebar-container{
+    @include theme-bg(#fff,#fff, #409EFF ,#909399);
+  }
+  .el-menu-item{
+    font-size:15px
+  }
+  .el-submenu .el-menu-item{
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px !important;
+    min-width: 200px;
+    // width:200px;
+    font-size: 15px;
+  }
+  .el-submenu__title{
+    font-size:15px;
+  }
+}
