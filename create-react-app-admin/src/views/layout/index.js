@@ -39,12 +39,17 @@ class AppLayout extends Component {
     })
   }
   // common function
+  toggle = () => {
+    this.setState({
+      collapsed: !this.state.collapsed
+    })
+  }
   getCurrentMenu(menu) {
     console.log(menu)
   }
   render() {
     return (<Layout>
-      {this.state.netMenuData != null ? <Sidebar sidebarData={this.state.netMenuData} getCurrentMenu={this.getCurrentMenu} {...this.props}/> : null}
+      {this.state.netMenuData != null ? <Sidebar sidebarData={this.state.netMenuData} isCollapsed={this.state.collapsed} getCurrentMenu={this.getCurrentMenu} {...this.props}/> : null}
       <Layout>
         <Header style={{
             background: '#fff',
@@ -53,6 +58,7 @@ class AppLayout extends Component {
           <Icon className="trigger" type={this.state.collapsed
               ? 'menu-unfold'
               : 'menu-fold'} onClick={this.toggle}/>
+          <Button className="logout" type="primary" onClick={this.handelLogout}>logout</Button>
         </Header>
         <Content style={{
             margin: '24px 16px',
@@ -60,7 +66,6 @@ class AppLayout extends Component {
             background: '#fff',
             minHeight: '100vh'
           }}>
-          <Button type="primary" onClick={this.handelLogout}>logout</Button>
         </Content>
       </Layout>
     </Layout>)
