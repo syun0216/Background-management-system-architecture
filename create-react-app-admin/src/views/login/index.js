@@ -33,8 +33,8 @@ const Login = (props) => {
     });
   }
   return (
-    <div className="styles.login_container">
-      <Form layout="inline" onSubmit={handelSubmit}>
+    <div className="login_container">
+      <Form className="login-form" onSubmit={handelSubmit}>
         <FormItem
           validateStatus={userNameError ? 'error' : ''}
           help={userNameError || ''}
@@ -56,7 +56,7 @@ const Login = (props) => {
           )}
         </FormItem>
         <FormItem>
-          <Button type="primary" onClick={handelSubmit}>登录</Button>
+          <Button type="primary" onClick={handelSubmit} className="login-form-button">登录</Button>
         </FormItem>
       </Form>
     </div>

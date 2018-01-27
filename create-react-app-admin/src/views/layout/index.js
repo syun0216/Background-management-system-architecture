@@ -15,11 +15,19 @@ const {Header, Sider, Content} = Layout
 
 class AppLayout extends Component {
   state = {
-    collapsed: false
+    netMenuData: null
   }
-  toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed
+  componentWillMount() {
+    this.getNetMenu()
+  }
+  // api
+  getNetMenu() {
+    get_net_menu().then(data => {
+      if(!data.data.code) {
+        this.setState({
+          netMenuData:data.data.data
+        })
+      }
     })
   }
   handelLogout = () => {
@@ -30,31 +38,13 @@ class AppLayout extends Component {
       }
     })
   }
-  componentDidMount() {
-    console.log('layout',this.props)
-    // get_net_menu().then(data => {
-    //   console.log(data)
-    // })
+  // common function
+  getCurrentMenu(menu) {
+    console.log(menu)
   }
   render() {
     return (<Layout>
-      <Sider trigger={null} collapsible="collapsible" collapsed={this.state.collapsed}>
-        <div className="logo"/>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1">
-            <Icon type="user"/>
-            <span>nav 1</span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Icon type="video-camera"/>
-            <span>nav 2</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Icon type="upload"/>
-            <span>nav 3</span>
-          </Menu.Item>
-        </Menu>
-      </Sider>
+      {this.state.netMenuData != null ? <Sidebar sidebarData={this.state.netMenuData} getCurrentMenu={this.getCurrentMenu} {...this.props}/> : null}
       <Layout>
         <Header style={{
             background: '#fff',
