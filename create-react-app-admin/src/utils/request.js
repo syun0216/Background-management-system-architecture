@@ -13,8 +13,6 @@ const request = (options) => {
     url
   } = options
   const cloneData = lodash.cloneDeep(data)
-  console.log(111,data)
-  console.log(222,cloneData)
 
   switch (method.toLowerCase()) {
     case 'get':

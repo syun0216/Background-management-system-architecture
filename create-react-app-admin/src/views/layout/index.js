@@ -5,12 +5,20 @@ import {get_net_menu} from '../../api/navigation'
 import {user_logout} from '../../api/user'
 // component
 import Sidebar from './Sidebar'
+
+
+import ContextTest from '../test/context_test'
+import EventContainer from '../test/eventemitter'
+import ImutableText from '../test/immutable_test'
+import Company_news from '../companynews/index'
+import Company_jobs from '../companyjobs/index'
 //withRouter
-import {withRouter} from 'react-router-dom'
+import {withRouter,Route,Switch} from 'react-router-dom'
 //redux
 import {connect} from 'react-redux'
 //style
 import './index.scss'
+import './index.css'
 const {Header, Sider, Content} = Layout
 
 class AppLayout extends Component {
@@ -23,7 +31,7 @@ class AppLayout extends Component {
   // api
   getNetMenu() {
     get_net_menu().then(data => {
-      if(!data.data.code) {
+      if(data.data.code === 200) {
         this.setState({
           netMenuData:data.data.data
         })
@@ -32,7 +40,7 @@ class AppLayout extends Component {
   }
   handelLogout = () => {
     user_logout().then(data => {
-      if(!data.data.code) {
+      if(data.data.code === 200) {
         this.props.userLogout()
         this.props.history.replace('/login')
       }
@@ -58,7 +66,7 @@ class AppLayout extends Component {
           <Icon className="trigger" type={this.state.collapsed
               ? 'menu-unfold'
               : 'menu-fold'} onClick={this.toggle}/>
-          <Button className="logout" type="primary" onClick={this.handelLogout}>logout</Button>
+          <Button className="logout" type="primary" onClick={this.handelLogout}>登出</Button>
         </Header>
         <Content style={{
             margin: '24px 16px',
@@ -66,6 +74,8 @@ class AppLayout extends Component {
             background: '#fff',
             minHeight: '100vh'
           }}>
+          <Route path="/dispatch/news" component={Company_news}/>
+          <Route path="/dispatch/jobs" component={Company_jobs}/>
         </Content>
       </Layout>
     </Layout>)

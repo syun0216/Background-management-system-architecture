@@ -3,18 +3,12 @@ import {Route, Switch, Redirect, withRouter} from 'react-router-dom'
 // component
 import Login from '../views/login/index'
 import Layout from '../views/layout/index'
+import Company_news from '../views/companynews/index'
+import Company_jobs from '../views/companyjobs/index'
 // utils
 import {getToken} from '../utils/auth'
 // redux
 import {connect} from 'react-redux'
-
-const PrivateRoute = ({
-  component: Component,
-  ...rest
-}) => (<Route {...rest} render={(props) => (
-    rest.isLogin
-    ? <Component {...props}/>
-    : <Redirect to="/login"/>)}/>)
 
 const Routes = (props) => {
   let isLogin = typeof getToken() !== 'undefined'
@@ -25,14 +19,16 @@ const Routes = (props) => {
   }
 
   return (<Switch>
-    <Route exact path="/" render={() => (
-        !isLogin
-        ? (<Redirect to="/login"/>)
-        : (<Layout/>))}/>
     <Route exact path="/login" render={() => (
       isLogin ? (<Redirect to="/"/>):(<Login />)
     )}/>
+    <Route exact path="/" component={Layout} />
+    <Layout>
+      <Route path="/dispatch/news" component={Company_news}/>    
+      <Route path="/dispatch/jobs" component={Company_jobs}/>    
+    </Layout>
     {/* <PrivateRoute component={Layout} path="/" isLogin={isLogin}/> */}
+    
     <Route render={() => (
       isLogin ? (<h1>404 not found</h1>) : (<Redirect to="/login"/>)
     )}/>

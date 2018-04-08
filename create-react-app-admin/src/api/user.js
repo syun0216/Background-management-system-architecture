@@ -1,19 +1,19 @@
 import request from '../utils/request'
 
-export function user_login(username,password){
+export function user_login(account,password){
   return request({
-    url:'/api/user/login_v2',
+    url:'/user/login',
     method:'post',
     data:{
-      username:username,
-      password:password
+      account,
+      password
     }
   })
 }
 
 export function user_logout() {
   return request({
-    url: '/api/user/logout_v2',
+    url: '/user/logout',
     method: 'get'
   })
 }

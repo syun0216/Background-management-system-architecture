@@ -97,7 +97,7 @@
       "react-app"
     ]
   },
-  "proxy": "http://localhost:1091",
+  "proxy": "http://localhost:1093",
   "eslintConfig": {
     "extends": "react-app"
   },
