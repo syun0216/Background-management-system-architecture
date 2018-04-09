@@ -19,15 +19,15 @@ const Routes = (props) => {
   }
 
   return (<Switch>
-    <Route exact path="/login" render={() => (
-      isLogin ? (<Redirect to="/"/>):(<Login />)
+    <Route exact path="/system/login" render={() => (
+      isLogin ? (<Redirect to="/system"/>):(<Login />)
     )}/>
-    <Route exact path="/" render={() => (
-      !isLogin ? (<Redirect to="/login"/>) : (<Layout/>)
+    <Route exact path="/system" render={() => (
+      !isLogin ? (<Redirect to="/system/login"/>) : (<Layout/>)
     )} />
     <Layout>
-      <Route path="/dispatch/news" component={Company_news}/>    
-      <Route path="/dispatch/jobs" component={Company_jobs}/>    
+      <Route path="/system/dispatch/news" component={Company_news}/>    
+      <Route path="/system/dispatch/jobs" component={Company_jobs}/>    
     </Layout>
     {/* <PrivateRoute component={Layout} path="/" isLogin={isLogin}/> */}
     

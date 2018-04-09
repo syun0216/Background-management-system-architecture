@@ -42,7 +42,7 @@ class AppLayout extends Component {
     user_logout().then(data => {
       if(data.data.code === 200) {
         this.props.userLogout()
-        this.props.history.replace('/login')
+        this.props.history.replace('/system/login')
       }
     })
   }
@@ -74,8 +74,8 @@ class AppLayout extends Component {
             background: '#fff',
             minHeight: '100vh'
           }}>
-          <Route path="/dispatch/news" component={Company_news}/>
-          <Route path="/dispatch/jobs" component={Company_jobs}/>
+          <Route path="/system/dispatch/news" component={Company_news}/>
+          <Route path="/system/dispatch/jobs" component={Company_jobs}/>
         </Content>
       </Layout>
     </Layout>)

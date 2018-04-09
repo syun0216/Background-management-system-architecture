@@ -28,7 +28,7 @@ export default class Sidebar extends PureComponent {
                 {/* <MenuItemGroup> */}
                   { item.children.map((citem,cidx) => (
                       <Menu.Item key={cidx}>
-                        <Link to={citem.route_path}>{citem.name}</Link>
+                        <Link to={`/system${citem.route_path}`}>{citem.name}</Link>
                       </Menu.Item>
                   )) }
                 {/* </MenuItemGroup> */}
@@ -36,7 +36,7 @@ export default class Sidebar extends PureComponent {
               (
                 // <Link to={item.route_path}>
                   <Menu.Item key={idx}>
-                    <Link to={item.route_path}>
+                    <Link to={`/system${item.route_path}`}>
                       <span><Icon type="mail" /><span>{item.name}</span></span>
                     </Link>
                   </Menu.Item>

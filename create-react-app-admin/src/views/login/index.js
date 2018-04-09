@@ -40,7 +40,7 @@ const Login = (props) => {
         user_login(values.userName,values.password).then(data => {
           if(data.data.code === 200){
             props.userLogin(data.data.data[0].account)
-            props.history.replace('/')
+            props.history.replace('/system')
           }
         })
       }
