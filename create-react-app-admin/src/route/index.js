@@ -22,7 +22,9 @@ const Routes = (props) => {
     <Route exact path="/login" render={() => (
       isLogin ? (<Redirect to="/"/>):(<Login />)
     )}/>
-    <Route exact path="/" component={Layout} />
+    <Route exact path="/" render={() => (
+      !isLogin ? (<Redirect to="/login"/>) : (<Layout/>)
+    )} />
     <Layout>
       <Route path="/dispatch/news" component={Company_news}/>    
       <Route path="/dispatch/jobs" component={Company_jobs}/>    

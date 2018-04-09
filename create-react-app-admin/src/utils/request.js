@@ -4,7 +4,7 @@ import lodash from 'lodash'
 import { message } from 'antd'
 
 const current_url = process.env.NODE_ENV === 'production' ?
-'http://localhost:3000' : 'http://'+window.location.host
+'http://www.qhdata.cn/api/simple_ci' : 'http://localhost:3000';
 
 const request = (options) => {
   let {
